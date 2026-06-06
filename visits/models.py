@@ -5,6 +5,7 @@ from customers.models import Customer
 from attendance.models import Attendance
 
 
+
 class Visit(models.Model):
     """
     Stores customer visit details.
@@ -21,6 +22,8 @@ class Visit(models.Model):
         on_delete=models.CASCADE,
         related_name="visits"
     )
+
+    
 
     # Attendance record for that day
     attendance = models.ForeignKey(
@@ -86,6 +89,9 @@ class Visit(models.Model):
         choices=STATUS_CHOICES,
         default="CHECKED_IN"
     )
+
+    class Meta:
+        ordering = ["-checkin_time"]  #This ensures the newest visits appear first in the admin panel.
 
     def __str__(self):
         return f"{self.employee.username} - {self.customer.name}"
