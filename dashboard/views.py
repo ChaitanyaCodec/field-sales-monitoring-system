@@ -39,10 +39,28 @@ def dashboard_view(request):
         "completed_visits": Visit.objects.filter(
             status="COMPLETED"
         ).count(),
+
+        "recent_visits": Visit.objects.select_related(
+            "employee",
+            "customer"
+        ).order_by(
+            "-checkin_time"
+        )[:5],        
+        
+        # Recent attendance records
+        "recent_attendance": Attendance.objects.select_related(
+            "employee"
+        ).order_by(
+            "-date",
+            "-start_time"
+        )[:5],
     }
+    
 
     return render(
         request,
         "dashboard/dashboard.html",
         context
     )
+
+    

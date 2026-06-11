@@ -21,6 +21,7 @@
 
     <!-- Statistics Cards -->
     <div class="row">
+        
 
         <!-- Total Employees -->
         <div class="col-md-3 mb-3">
@@ -63,6 +64,119 @@
         </div>
 
     </div>
+
+    <!-- Recent Visits Table -->
+
+<div class="card mt-4">
+    <div class="card-body">
+
+        <h4>Recent Visits</h4>
+        <p>Recent Visits Count: {{ recent_visits|length }}</p>
+        <table class="table table-striped">
+
+            <thead>
+                <tr>
+                    <th>Employee</th>
+                    <th>Customer</th>
+                    
+                    <th>Check-In</th>
+                    
+<th>Check-Out</th>
+<th>Duration</th>
+<th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for visit in recent_visits %}
+
+                <tr>
+                    <td>{{ visit.employee.username }}</td>
+
+                    <td>{{ visit.customer.name }}</td>
+
+                    
+
+                    <td>{{ visit.checkin_time }}</td>
+
+
+
+                    
+<td>{{ visit.checkout_time }}</td>
+<td>{{ visit.duration_minutes }}</td>
+<td>{{ visit.status }}</td>
+                </tr>
+
+                {% empty %}
+
+                <tr>
+                    <td colspan="4">
+                        No visits found.
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+
+<!-- Recent Attendance -->
+
+<div class="card mt-4">
+    <div class="card-body">
+
+        <h4>Recent Attendance</h4>
+
+        <table class="table table-striped">
+
+            <thead>
+                <tr>
+                    <th>Employee</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Start Time</th>
+                    
+<th>End Time</th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for attendance in recent_attendance %}
+
+                <tr>
+                    <td>{{ attendance.employee.username }}</td>
+
+                    <td>{{ attendance.date }}</td>
+
+                    <td>{{ attendance.status }}</td>
+
+                    <td>{{ attendance.start_time }}</td>
+                    <td>{{ attendance.end_time }}</td>
+                </tr>
+
+                {% empty %}
+
+                <tr>
+                    <td colspan="4">
+                        No attendance records found.
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
 
     <!-- Completed Visits -->
     <div class="card mt-4">
