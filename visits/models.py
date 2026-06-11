@@ -89,7 +89,25 @@ class Visit(models.Model):
         choices=STATUS_CHOICES,
         default="CHECKED_IN"
     )
+    
+    @property
+    def duration_minutes(self):
+        """
+        Calculate visit duration in minutes.
+        """
 
+        if not self.checkout_time:
+            return None
+
+        duration = (
+            self.checkout_time -
+            self.checkin_time
+        )
+
+        return round(
+            duration.total_seconds() / 60,
+            2
+        )
     class Meta:
         ordering = ["-checkin_time"]  #This ensures the newest visits appear first in the admin panel.
 

@@ -34,6 +34,18 @@ def check_in_customer(
             "Employee has not started work."
         )
 
+    # Check whether employee already has an active visit
+    active_visit = Visit.objects.filter(
+        employee=employee,
+        status="CHECKED_IN"
+    ).exists()
+
+    if active_visit:
+        raise ValueError(
+            "Employee already has an active visit."
+        )
+    
+
     # Get customer
     customer = Customer.objects.get(
         id=customer_id
@@ -56,6 +68,9 @@ def check_in_customer(
             f"{round(distance, 2)} meters away."
         )
 
+
+   
+    
     # Create visit
     visit = Visit.objects.create(
         employee=employee,
@@ -68,6 +83,55 @@ def check_in_customer(
         checkin_longitude=longitude,
 
         status="CHECKED_IN"
+    )
+
+    return visit
+
+# Complete an active customer visit
+def check_out_customer(
+    visit_id,
+    latitude,
+    longitude,
+    notes=""
+):
+    """
+    Complete a customer visit.
+
+    Business Rules:
+    - Visit must exist.
+    - Visit must be CHECKED_IN.
+    - Save checkout details.
+    - Mark visit as COMPLETED.
+    """
+
+    # Find active visit
+    visit = Visit.objects.filter(
+        id=visit_id,
+        status="CHECKED_IN"
+    ).first()
+
+    if not visit:
+        raise ValueError(
+            "Active visit not found."
+        )
+
+    # Save checkout details
+    visit.checkout_time = timezone.now()
+    visit.checkout_latitude = latitude
+    visit.checkout_longitude = longitude
+
+    visit.notes = notes
+    visit.status = "COMPLETED"
+
+    # Save updated fields
+    visit.save(
+        update_fields=[
+            "checkout_time",
+            "checkout_latitude",
+            "checkout_longitude",
+            "notes",
+            "status",
+        ]
     )
 
     return visit
