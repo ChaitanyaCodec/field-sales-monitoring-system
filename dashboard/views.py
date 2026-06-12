@@ -6,6 +6,8 @@ from customers.models import Customer
 from attendance.models import Attendance
 from visits.models import Visit
 
+# Database aggregation functions
+from django.db.models import Count, Q
 
 def dashboard_view(request):
     """
@@ -54,6 +56,25 @@ def dashboard_view(request):
             "-date",
             "-start_time"
         )[:5],
+        
+                # Employee performance summary
+        "employee_performance": User.objects.annotate(
+
+            # Total visits
+            total_visits=Count("visits"),
+
+            # Completed visits
+            completed_visits=Count(
+                "visits",
+                filter=Q(
+                    visits__status="COMPLETED"
+                )
+            )
+        ).order_by(
+            "-completed_visits"
+        ),
+    
+    
     }
     
 
