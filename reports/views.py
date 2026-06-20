@@ -1,11 +1,11 @@
 from django.shortcuts import render
-
+from django.contrib.auth.decorators import login_required
 # Import Visit model
 from visits.models import Visit
 
 # Import Attendance model
 from attendance.models import Attendance
-
+@login_required
 def visit_report(request):
     """
     Visit Report
@@ -35,7 +35,7 @@ def visit_report(request):
             "visits": visits
         }
     )
-
+@login_required
 # Attendance Report View
 def attendance_report(request):
     """

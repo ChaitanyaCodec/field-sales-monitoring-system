@@ -210,6 +210,23 @@ python manage.py runserver
 git clone <repository-url>
 cd sales_monitoring
 
+```
+
+## Future Enhancements
+
+### Customer Classification
+
+Add customer categories:
+- Retailer
+- Distributor
+- Doctor
+- Other
+
+Benefits:
+- Better reporting
+- Customer segmentation
+- Sales analytics
+
 
 # Future Scope
 

@@ -24,6 +24,11 @@ urlpatterns = [
         "admin/",
         admin.site.urls
     ),
+    
+    path(
+        "accounts/",
+        include("accounts.urls")
+    ),
 
     # Dashboard
     path(
@@ -36,4 +41,6 @@ urlpatterns = [
         "reports/",
         include("reports.urls")
     ),
+
+
 ]

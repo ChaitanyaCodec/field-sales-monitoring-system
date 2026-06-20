@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.utils import timezone
-
+from django.contrib.auth.decorators import login_required
 from accounts.models import User
 from customers.models import Customer
 from attendance.models import Attendance
@@ -8,7 +8,7 @@ from visits.models import Visit
 
 # Database aggregation functions
 from django.db.models import Count, Q
-
+@login_required
 def dashboard_view(request):
     """
     Display summary statistics for the sales monitoring system.

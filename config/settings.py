@@ -128,3 +128,8 @@ STATIC_URL = 'static/'
 
 # Custom user model with employee roles and additional fields instead of Django's default User
 AUTH_USER_MODEL = 'accounts.User'
+
+
+LOGIN_URL = "/accounts/login/"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/accounts/login/"
